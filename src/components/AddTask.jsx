@@ -1,20 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./AddTaskStyles.css";
+import { useNavigate } from "react-router-dom";
 
 const AddTask = ({ fetchAllTasks }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/tasks", {
+      console.log(title, description);
+      await axios.post("http://localhost:8080/api/tasks"
+      , {
         title,
         description,
       });
       // After we submit the form, it'd be great if we could navigate back to the home page.
       // Is there a way to programmatically navigate to the home page? 🤔
+      navigate("/All-Tasks");
       fetchAllTasks();
     } catch (error) {
       console.error("Error adding task:", error);
